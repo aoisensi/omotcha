@@ -5,9 +5,16 @@ const elementMessage = document.getElementById('message')!
 
 const audioContext = new window.AudioContext();
 
-const response = await fetch('SYS_text.ogg');
-const arrayBuffer = await response.arrayBuffer();
-const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+let audioBuffer: AudioBuffer;
+
+async function load_audio() {
+  const response = await fetch('SYS_text.ogg');
+  const arrayBuffer = await response.arrayBuffer();
+  audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+}
+
+load_audio();
+
 class Message {
   constructor(public name: string, public message: string) {}
 }
