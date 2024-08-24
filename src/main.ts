@@ -21,9 +21,9 @@ class Message {
 
 const stack: Message[] = [];
 
-var ppp_id: number;
-var hdd_id: number;
-var waiting = false;
+let ppp_id: number;
+let hdd_id: number;
+let waiting = false;
 
 const client = new TMI.Client({
   // options: { debug: true },
@@ -51,7 +51,7 @@ function pushMessage(message: Message) {
 }
 
 function show(message: Message) {
-  waiting = false;
+  waiting = true;
   console.log(message.name, message.message);
   elementName.innerText = message.name;
   elementMessage.innerText = '';
@@ -75,7 +75,7 @@ function show(message: Message) {
         if(new_message){
           show(new_message)
         } else {
-          waiting = true;
+          waiting = false;
         }
       }, 3000);
       hdd_id = setTimeout(() => {
@@ -101,12 +101,8 @@ function hide_box() {
 function play_text() {
   const randomPitch = 0.9 + Math.random() * 0.2;
   const audioSource = audioContext.createBufferSource();
-  const gain = audioContext.createGain();
-  gain.gain.value = 0.1;
   audioSource.buffer = audioBuffer;
   audioSource.playbackRate.value = randomPitch;
-  audioSource.playbackRate
-  audioSource.connect(gain);
-  gain.connect(audioContext.destination);
+  audioSource.connect(audioContext.destination);
   audioSource.start(0);
 }
